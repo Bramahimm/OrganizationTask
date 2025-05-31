@@ -1,38 +1,80 @@
+<?php
+session_start();
+if (isset($_SESSION['user'])) {
+    header("Location: views/dashboardAnggota.php");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orgenius</title>
-
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-
-    <link rel="icon" type="image/x-png" href="/assets/img/orgenius.png">
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Orgenius</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
+            background-color: bisque;
         }
     </style>
 </head>
 
-<body class="p-0 m-0">
+<body class="min-h-screen flex items-center justify-center">
 
-    <!-- Hero Section -->
-    <div class="bg-blue-600 flex py-4 text-white text-center">
-        
-    </div>
+    <div class="bg-white shadow-lg flex rounded-xl overflow-hidden max-w-4xl w-full">
+        <!-- Gambar kiri -->
+        <div class="w-1/2 hidden md:block">
+            <img src="assets/img/orgenius.png" alt="Gedung Rektorat" class="object-cover w-full h-full" />
+            <div class="absolute text-white bottom-10 left-10">
+                <p class="text-sm text-black font-semibold">SELAMAT DATANG</p>
+                <h2 class="text-xl font-semibold">Sistem Informasi UKM</h2>
+                <p class="text-lg font-bold">Universitas Lampung</p>
+            </div>
+        </div>
 
-    <!-- Konten Tambahan -->
-    <div class="max-w-xl mx-auto my-10 text-center">
-        <h2 class="text-2xl font-semibold mb-4">Selamat Datang di TaskUKM</h2>
-        <p class="mb-6">Kelola tugas dan kegiatan organisasi mahasiswa dengan mudah dan efisien.</p>
-        <a href="login.php" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">Login</a>
-        <a href="register.php"
-            class="ml-4 border border-blue-600 text-blue-600 px-6 py-3 rounded-lg hover:bg-blue-50 transition">Daftar</a>
+        <!-- Form Login -->
+        <div class="w-full md:w-1/2 p-8 relative">
+            <div class="text-center mb-6">
+                <img src="assets/img/orgenius.png" alt="Unila" class="mx-auto w-20 mb-2" />
+                <h2 class="text-xl font-semibold text-gray-700">Silakan Login</h2>
+            </div>
+            <form action="process/login.php" method="POST" class="space-y-4">
+                <div>
+                    <label class="sr-only">Email</label>
+                    <div class="flex items-center border rounded-md overflow-hidden">
+                        <span class="px-3 text-gray-500"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M16 14a4 4 0 01-8 0m8 0a4 4 0 01-8 0m8 0H8m4 0v4m0 0H8m4 0h4" />
+                            </svg></span>
+                        <input type="email" name="email" placeholder="Email" required
+                            class="w-full py-2 px-3 focus:outline-none" />
+                    </div>
+                </div>
+                <div>
+                    <label class="sr-only">Password</label>
+                    <div class="flex items-center border rounded-md overflow-hidden">
+                        <span class="px-3 text-gray-500"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 11c0-1.657 1.343-3 3-3s3 1.343 3 3m-6 0c0-1.657-1.343-3-3-3s-3 1.343-3 3m6 0v2m0 2h6m-6 0H6" />
+                            </svg></span>
+                        <input type="password" name="password" placeholder="Password" required
+                            class="w-full py-2 px-3 focus:outline-none" />
+                    </div>
+                </div>
+                <div class="flex justify-center items-center">
+                    <button type="submit"
+                        class="w-20 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">
+                        Login
+                    </button>
+                </div>
+
+            </form>
+            <p class="text-sm text-right mt-2"><a href="#" class="text-blue-600 hover:underline">Lupa Password?</a></p>
+        </div>
     </div>
 
 </body>

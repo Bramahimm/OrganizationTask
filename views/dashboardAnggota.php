@@ -1,6 +1,5 @@
 <?php
 session_start();
-// Cek apakah user sudah login & berperan sebagai anggota
 if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'anggota') {
     header("Location: ../login.php");
     exit;

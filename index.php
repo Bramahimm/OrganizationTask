@@ -18,14 +18,10 @@ if (isset($_SESSION['user'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login - Orgenius</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {
-            background-color: bisque;
-        }
-    </style>
+    
 </head>
 
-<body class="min-h-screen flex items-center justify-center">
+<body class="min-h-screen flex items-center justify-center bg-[#ffe4c4]">
     <div class="bg-white shadow-lg flex rounded-xl overflow-hidden max-w-4xl w-full">
         <!-- Gambar kiri -->
         <div class="w-1/2 hidden md:block relative">

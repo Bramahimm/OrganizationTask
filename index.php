@@ -1,14 +1,5 @@
 <?php
 session_start();
-if (isset($_SESSION['user'])) {
-    $role = $_SESSION['user']['role'];
-    if ($role === 'pengurus') {
-        header("Location: views/dashboardPengurus.php");
-    } else {
-        header("Location: views/dashboardAnggota.php");
-    }
-    exit;
-}
 ?>
 <!DOCTYPE html>
 <html lang="id">

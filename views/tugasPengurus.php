@@ -350,15 +350,4 @@ if (isset($_GET['edit'])) {
         <?php endif; ?>
     </script>
 </body>
-</html>tion() {
-            const alert = document.querySelector('.bg-green-100');
-            if (alert) {
-                alert.style.transition = 'opacity 0.5s';
-                alert.style.opacity = '0';
-                setTimeout(() => alert.remove(), 500);
-            }
-        }, 5000);
-        <?php endif; ?>
-    </script>
-</body>
 </html>

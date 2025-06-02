@@ -24,6 +24,8 @@ $result = mysqli_query($conn, $query);
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link rel="icon" type="image/x-png" href="../assets/img/orgenius.png">
+
 
   <style>
     body {
@@ -56,7 +58,7 @@ $result = mysqli_query($conn, $query);
     <aside class="w-64 bg-white shadow-md h-screen fixed left-0 top-16">
       <nav class="p-6">
         <ul class="space-y-3">
-          <li><a href="dashboardAnggota.php" class="flex items-center p-3 hover:bg-blue-700 bg-blue-600 rounded-md"><i
+          <li><a href="dashboardAnggota.php" class="text-white flex items-center p-3 hover:bg-blue-700 bg-blue-600 rounded-md"><i
                 class="fas fa-home w-5"></i><span class="ml-3">Dashboard</span></a></li>
           <li><a href="tugasAnggota.php" class="flex items-center p-3 hover:bg-gray-100 rounded-md"><i
                 class="fas fa-tasks w-5"></i><span class="ml-3">Tugas</span></a></li>

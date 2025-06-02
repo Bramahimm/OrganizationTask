@@ -16,6 +16,7 @@ $namaUser = $_SESSION['user']['nama'];
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link rel="icon" type="image/x-png" href="assets/img/orgenius.png">
 
   <style>
     body {
@@ -50,13 +51,12 @@ $namaUser = $_SESSION['user']['nama'];
         <ul class="space-y-3">
           <li><a href="#" class="flex items-center p-3 hover:bg-blue-700 bg-blue-600 rounded-md"><i
                 class="fas fa-home w-5"></i><span class="ml-3">Dashboard</span></a></li>
-          <li><a href="#" class="flex items-center p-3 hover:bg-gray-100 rounded-md"><span class="ml-3">Tugas</span></a>
-          </li>
-          <li><a href="#" class="flex items-center p-3 hover:bg-gray-100 rounded-md"><span class="ml-3">Jadwal
-                Kegiatan</span></a></li>
-          <li><a href="../process/logout.php"
-              class="flex items-center p-3 hover:bg-red-100 text-red-600 rounded-md"><span
-                class="ml-3">Logout</span></a></li>
+          <li><a href="#" class="flex items-center p-3 hover:bg-gray-100 rounded-md"><i
+                class="fas fa-tasks w-5"></i><span class="ml-3">Tugas</span></a></li>
+          <li><a href="#" class="flex items-center p-3 text-black rounded-md hover:bg-gray-100"><i
+                class="fas fa-calendar w-5"></i><span class="ml-3">Jadwal Kegiatan</span></a></li>
+          <li><a href="../process/logout.php" class="flex items-center p-3 hover:bg-red-100 text-red-700 rounded-md"><i
+                class="fas fa-sign-out-alt w-5"></i><span class="ml-3">Logout</span></a></li>
         </ul>
       </nav>
     </aside>

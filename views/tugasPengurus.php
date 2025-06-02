@@ -281,7 +281,7 @@ if (isset($_GET['edit'])) {
         <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md mx-4">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-lg font-semibold text-gray-900">Edit Tugas</h3>
-                <a href="tugas.php" class="text-gray-400 hover:text-gray-600">
+                <a href="tugasPengurus.php" class="text-gray-400 hover:text-gray-600">
                     <i class="fas fa-times"></i>
                 </a>
             </div>
@@ -310,7 +310,7 @@ if (isset($_GET['edit'])) {
                     </div>
                 </div>
                 <div class="flex justify-end space-x-3 mt-6">
-                    <a href="tugas.php" class="px-4 py-2 text-gray-600 bg-gray-200 rounded-md hover:bg-gray-300 transition duration-200">Batal</a>
+                    <a href="tugasPengurus.php" class="px-4 py-2 text-gray-600 bg-gray-200 rounded-md hover:bg-gray-300 transition duration-200">Batal</a>
                     <button type="submit" name="edit_tugas" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200">Update</button>
                 </div>
             </form>
@@ -340,6 +340,17 @@ if (isset($_GET['edit'])) {
         // Auto hide success message after 5 seconds
         <?php if ($message && $messageType === 'success'): ?>
         setTimeout(function() {
+            const alert = document.querySelector('.bg-green-100');
+            if (alert) {
+                alert.style.transition = 'opacity 0.5s';
+                alert.style.opacity = '0';
+                setTimeout(() => alert.remove(), 500);
+            }
+        }, 5000);
+        <?php endif; ?>
+    </script>
+</body>
+</html>tion() {
             const alert = document.querySelector('.bg-green-100');
             if (alert) {
                 alert.style.transition = 'opacity 0.5s';

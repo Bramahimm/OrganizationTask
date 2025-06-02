@@ -41,7 +41,7 @@ if (isset($_POST['edit_tugas'])) {
     $deadline = mysqli_real_escape_string($conn, $_POST['deadline']);
     $status = mysqli_real_escape_string($conn, $_POST['status']);
     
-    $query = "UPDATE tugas SET judul='$judul', deskripsi='$deskripsi', deadline='$deadline', status='$status' WHERE idTugas='$idTugas' AND idUser='$idUser'";
+    $query = "UPDATE tugas SET judul='$judul', deskripsi='$deskripsi', deadline='$deadline', status='$status' WHERE idTugas='$idTugas'";
     
     if (mysqli_query($conn, $query)) {
         $message = "Tugas berhasil diupdate!";
@@ -55,7 +55,7 @@ if (isset($_POST['edit_tugas'])) {
 // DELETE - Hapus tugas
 if (isset($_GET['hapus'])) {
     $idTugas = mysqli_real_escape_string($conn, $_GET['hapus']);
-    $query = "DELETE FROM tugas WHERE idTugas='$idTugas' AND idUser='$idUser'";
+    $query = "DELETE FROM tugas WHERE idTugas='$idTugas' ";
     
     if (mysqli_query($conn, $query)) {
         $message = "Tugas berhasil dihapus!";
@@ -67,14 +67,14 @@ if (isset($_GET['hapus'])) {
 }
 
 // READ - Ambil data tugas
-$query = "SELECT * FROM tugas WHERE idUser = '$idUser' ORDER BY deadline ASC";
+$query = "SELECT * FROM tugas ORDER BY deadline ASC";
 $result = mysqli_query($conn, $query);
 
 // Untuk edit - ambil data tugas yang akan diedit
 $editData = null;
 if (isset($_GET['edit'])) {
     $idEdit = mysqli_real_escape_string($conn, $_GET['edit']);
-    $editQuery = "SELECT * FROM tugas WHERE idTugas='$idEdit' AND idUser='$idUser'";
+    $editQuery = "SELECT * FROM tugas WHERE idTugas='$idEdit'";
     $editResult = mysqli_query($conn, $editQuery);
     $editData = mysqli_fetch_assoc($editResult);
 }

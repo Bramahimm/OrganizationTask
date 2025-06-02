@@ -41,7 +41,7 @@ if (isset($_POST['edit_kegiatan'])) {
     $tanggal = mysqli_real_escape_string($conn, $_POST['tanggal']);
     $lokasi = mysqli_real_escape_string($conn, $_POST['lokasi']);
     
-    $query = "UPDATE kegiatan SET namaKegiatan='$namaKegiatan', deskripsi='$deskripsi', tanggal='$tanggal', lokasi='$lokasi' WHERE idKegiatan='$idKegiatan' AND idPembuat='$idUser'";
+    $query = "UPDATE kegiatan SET namaKegiatan='$namaKegiatan', deskripsi='$deskripsi', tanggal='$tanggal', lokasi='$lokasi' WHERE idKegiatan='$idKegiatan'";
     
     if (mysqli_query($conn, $query)) {
         $message = "Kegiatan berhasil diupdate!";
@@ -55,7 +55,7 @@ if (isset($_POST['edit_kegiatan'])) {
 // DELETE - Hapus kegiatan
 if (isset($_GET['hapus'])) {
     $idKegiatan = mysqli_real_escape_string($conn, $_GET['hapus']);
-    $query = "DELETE FROM kegiatan WHERE idKegiatan='$idKegiatan' AND idPembuat='$idUser'";
+    $query = "DELETE FROM kegiatan WHERE idKegiatan='$idKegiatan'";
     
     if (mysqli_query($conn, $query)) {
         $message = "Kegiatan berhasil dihapus!";
@@ -67,14 +67,14 @@ if (isset($_GET['hapus'])) {
 }
 
 // READ - Ambil data kegiatan
-$query = "SELECT * FROM kegiatan WHERE idPembuat = '$idUser' ORDER BY tanggal ASC";
+$query = "SELECT * FROM kegiatan ORDER BY tanggal ASC";
 $result = mysqli_query($conn, $query);
 
 // Untuk edit - ambil data kegiatan yang akan diedit
 $editData = null;
 if (isset($_GET['edit'])) {
     $idEdit = mysqli_real_escape_string($conn, $_GET['edit']);
-    $editQuery = "SELECT * FROM kegiatan WHERE idKegiatan='$idEdit' AND idPembuat='$idUser'";
+    $editQuery = "SELECT * FROM kegiatan WHERE idKegiatan='$idEdit'";
     $editResult = mysqli_query($conn, $editQuery);
     $editData = mysqli_fetch_assoc($editResult);
 }

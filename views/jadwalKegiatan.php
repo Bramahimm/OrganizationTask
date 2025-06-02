@@ -21,9 +21,9 @@ if (isset($_POST['tambah_kegiatan'])) {
     $deskripsi = mysqli_real_escape_string($conn, $_POST['deskripsi']);
     $tanggal = mysqli_real_escape_string($conn, $_POST['tanggal']);
     $lokasi = mysqli_real_escape_string($conn, $_POST['lokasi']);
-    
+
     $query = "INSERT INTO kegiatan (namaKegiatan, deskripsi, tanggal, lokasi, idPembuat) VALUES ('$namaKegiatan', '$deskripsi', '$tanggal', '$lokasi', '$idUser')";
-    
+
     if (mysqli_query($conn, $query)) {
         $message = "Kegiatan berhasil ditambahkan!";
         $messageType = "success";
@@ -40,9 +40,9 @@ if (isset($_POST['edit_kegiatan'])) {
     $deskripsi = mysqli_real_escape_string($conn, $_POST['deskripsi']);
     $tanggal = mysqli_real_escape_string($conn, $_POST['tanggal']);
     $lokasi = mysqli_real_escape_string($conn, $_POST['lokasi']);
-    
+
     $query = "UPDATE kegiatan SET namaKegiatan='$namaKegiatan', deskripsi='$deskripsi', tanggal='$tanggal', lokasi='$lokasi' WHERE idKegiatan='$idKegiatan' AND idPembuat='$idUser'";
-    
+
     if (mysqli_query($conn, $query)) {
         $message = "Kegiatan berhasil diupdate!";
         $messageType = "success";
@@ -56,7 +56,7 @@ if (isset($_POST['edit_kegiatan'])) {
 if (isset($_GET['hapus'])) {
     $idKegiatan = mysqli_real_escape_string($conn, $_GET['hapus']);
     $query = "DELETE FROM kegiatan WHERE idKegiatan='$idKegiatan' AND idPembuat='$idUser'";
-    
+
     if (mysqli_query($conn, $query)) {
         $message = "Kegiatan berhasil dihapus!";
         $messageType = "success";
@@ -82,6 +82,7 @@ if (isset($_GET['edit'])) {
 
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -93,9 +94,11 @@ if (isset($_GET['edit'])) {
         body {
             font-family: 'Inter', sans-serif;
         }
+
         .modal {
             display: none;
         }
+
         .modal.active {
             display: flex;
         }
@@ -114,7 +117,8 @@ if (isset($_GET['edit'])) {
         <!-- Profil User -->
         <div class="flex items-center gap-3">
             <span class="font-semibold"><?= htmlspecialchars($namaUser) ?></span>
-            <img src="https://ui-avatars.com/api/?name=<?= urlencode($namaUser) ?>" class="w-10 h-10 rounded-full" alt="Avatar">
+            <img src="https://ui-avatars.com/api/?name=<?= urlencode($namaUser) ?>" class="w-10 h-10 rounded-full"
+                alt="Avatar">
         </div>
     </nav>
 
@@ -124,10 +128,16 @@ if (isset($_GET['edit'])) {
         <aside class="w-64 bg-white shadow-md h-screen fixed left-0 top-16">
             <nav class="p-6">
                 <ul class="space-y-3">
-                    <li><a href="dashboardAnggota.php" class="flex items-center p-3 hover:bg-gray-100 rounded-md"><i class="fas fa-home w-5"></i><span class="ml-3">Dashboard</span></a></li>
-                    <li><a href="tugasAnggota.php" class="flex items-center p-3 hover:bg-gray-100 rounded-md"><i class="fas fa-tasks w-5"></i><span class="ml-3">Tugas</span></a></li>
-                    <li><a href="jadwalKegiatan.php" class="flex items-center p-3 bg-blue-600 text-white rounded-md hover:bg-blue-700"><i class="fas fa-calendar w-5"></i><span class="ml-3">Jadwal Kegiatan</span></a></li>
-                    <li><a href="../process/logout.php" class="flex items-center p-3 hover:bg-red-100 text-red-700 rounded-md"><i class="fas fa-sign-out-alt w-5"></i><span class="ml-3">Logout</span></a></li>
+                    <li><a href="dashboardAnggota.php" class="flex items-center p-3 hover:bg-gray-100 rounded-md"><i
+                                class="fas fa-home w-5"></i><span class="ml-3">Dashboard</span></a></li>
+                    <li><a href="tugasAnggota.php" class="flex items-center p-3 hover:bg-gray-100 rounded-md"><i
+                                class="fas fa-tasks w-5"></i><span class="ml-3">Tugas</span></a></li>
+                    <li><a href="jadwalKegiatan.php"
+                            class="flex items-center p-3 bg-blue-600 text-white rounded-md hover:bg-blue-700"><i
+                                class="fas fa-calendar w-5"></i><span class="ml-3">Jadwal Kegiatan</span></a></li>
+                    <li><a href="../process/logout.php"
+                            class="flex items-center p-3 hover:bg-red-100 text-red-700 rounded-md"><i
+                                class="fas fa-sign-out-alt w-5"></i><span class="ml-3">Logout</span></a></li>
                 </ul>
             </nav>
         </aside>
@@ -137,7 +147,8 @@ if (isset($_GET['edit'])) {
             <!-- Header -->
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-bold text-gray-800">Jadwal Kegiatan</h2>
-                <button onclick="openModal('modalTambah')" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition duration-200">
+                <button onclick="openModal('modalTambah')"
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition duration-200">
                     <i class="fas fa-plus"></i>
                     Tambah Kegiatan
                 </button>
@@ -145,10 +156,11 @@ if (isset($_GET['edit'])) {
 
             <!-- Pesan Notifikasi -->
             <?php if ($message): ?>
-            <div class="mb-6 p-4 rounded-lg <?= $messageType === 'success' ? 'bg-green-100 text-green-700 border border-green-200' : 'bg-red-100 text-red-700 border border-red-200' ?>">
-                <i class="fas <?= $messageType === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle' ?> mr-2"></i>
-                <?= htmlspecialchars($message) ?>
-            </div>
+                <div
+                    class="mb-6 p-4 rounded-lg <?= $messageType === 'success' ? 'bg-green-100 text-green-700 border border-green-200' : 'bg-red-100 text-red-700 border border-red-200' ?>">
+                    <i class="fas <?= $messageType === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle' ?> mr-2"></i>
+                    <?= htmlspecialchars($message) ?>
+                </div>
             <?php endif; ?>
 
             <!-- Card Kegiatan -->
@@ -161,7 +173,7 @@ if (isset($_GET['edit'])) {
                         $selisihHari = $tanggalSekarang->diff($tanggalKegiatan)->days;
                         $statusWarna = '';
                         $statusText = '';
-                        
+
                         if ($tanggalKegiatan < $tanggalSekarang) {
                             $statusWarna = 'bg-gray-100 border-gray-300';
                             $statusText = 'Sudah Berlalu';
@@ -175,65 +187,71 @@ if (isset($_GET['edit'])) {
                             $statusWarna = 'bg-blue-50 border-blue-200';
                             $statusText = 'Akan Datang';
                         }
-                ?>
-                <div class="bg-white rounded-lg shadow-md overflow-hidden border-l-4 <?= $statusWarna ?>">
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="flex-1">
-                                <h3 class="text-lg font-semibold text-gray-900 mb-2"><?= htmlspecialchars($data['namaKegiatan']) ?></h3>
-                                <span class="inline-block px-2 py-1 text-xs font-medium rounded-full <?= 
-                                    $tanggalKegiatan < $tanggalSekarang ? 'bg-gray-100 text-gray-600' :
-                                    ($selisihHari <= 3 ? 'bg-red-100 text-red-700' :
-                                    ($selisihHari <= 7 ? 'bg-yellow-100 text-yellow-700' : 'bg-blue-100 text-blue-700'))
-                                ?>">
-                                    <?= $statusText ?>
-                                </span>
-                            </div>
-                            <div class="flex space-x-1">
-                                <a href="?edit=<?= $data['idKegiatan'] ?>" class="text-blue-600 hover:text-blue-800 p-2 hover:bg-blue-100 rounded-full transition duration-200">
-                                    <i class="fas fa-edit text-sm"></i>
-                                </a>
-                                <a href="?hapus=<?= $data['idKegiatan'] ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus kegiatan ini?')" class="text-red-600 hover:text-red-800 p-2 hover:bg-red-100 rounded-full transition duration-200">
-                                    <i class="fas fa-trash text-sm"></i>
-                                </a>
+                        ?>
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden border-l-4 <?= $statusWarna ?>">
+                            <div class="p-6">
+                                <div class="flex justify-between items-start mb-4">
+                                    <div class="flex-1">
+                                        <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                                            <?= htmlspecialchars($data['namaKegiatan']) ?></h3>
+                                        <span class="inline-block px-2 py-1 text-xs font-medium rounded-full <?=
+                                            $tanggalKegiatan < $tanggalSekarang ? 'bg-gray-100 text-gray-600' :
+                                            ($selisihHari <= 3 ? 'bg-red-100 text-red-700' :
+                                                ($selisihHari <= 7 ? 'bg-yellow-100 text-yellow-700' : 'bg-blue-100 text-blue-700'))
+                                            ?>">
+                                            <?= $statusText ?>
+                                        </span>
+                                    </div>
+                                    <div class="flex space-x-1">
+                                        <a href="?edit=<?= $data['idKegiatan'] ?>"
+                                            class="text-blue-600 hover:text-blue-800 p-2 hover:bg-blue-100 rounded-full transition duration-200">
+                                            <i class="fas fa-edit text-sm"></i>
+                                        </a>
+                                        <a href="?hapus=<?= $data['idKegiatan'] ?>"
+                                            onclick="return confirm('Apakah Anda yakin ingin menghapus kegiatan ini?')"
+                                            class="text-red-600 hover:text-red-800 p-2 hover:bg-red-100 rounded-full transition duration-200">
+                                            <i class="fas fa-trash text-sm"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="space-y-3">
+                                    <div class="flex items-center text-gray-600">
+                                        <i class="fas fa-calendar-alt w-5 mr-3"></i>
+                                        <span class="text-sm"><?= date('d F Y', strtotime($data['tanggal'])) ?></span>
+                                    </div>
+
+                                    <div class="flex items-center text-gray-600">
+                                        <i class="fas fa-map-marker-alt w-5 mr-3"></i>
+                                        <span class="text-sm"><?= htmlspecialchars($data['lokasi']) ?></span>
+                                    </div>
+
+                                    <?php if (!empty($data['deskripsi'])): ?>
+                                        <div class="flex items-start text-gray-600">
+                                            <i class="fas fa-align-left w-5 mr-3 mt-1"></i>
+                                            <p class="text-sm leading-relaxed"><?= nl2br(htmlspecialchars($data['deskripsi'])) ?>
+                                            </p>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
                             </div>
                         </div>
-                        
-                        <div class="space-y-3">
-                            <div class="flex items-center text-gray-600">
-                                <i class="fas fa-calendar-alt w-5 mr-3"></i>
-                                <span class="text-sm"><?= date('d F Y', strtotime($data['tanggal'])) ?></span>
-                            </div>
-                            
-                            <div class="flex items-center text-gray-600">
-                                <i class="fas fa-map-marker-alt w-5 mr-3"></i>
-                                <span class="text-sm"><?= htmlspecialchars($data['lokasi']) ?></span>
-                            </div>
-                            
-                            <?php if (!empty($data['deskripsi'])): ?>
-                            <div class="flex items-start text-gray-600">
-                                <i class="fas fa-align-left w-5 mr-3 mt-1"></i>
-                                <p class="text-sm leading-relaxed"><?= nl2br(htmlspecialchars($data['deskripsi'])) ?></p>
-                            </div>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                </div>
-                <?php
+                        <?php
                     }
                 } else {
-                ?>
-                <div class="col-span-full">
-                    <div class="bg-white rounded-lg shadow-md p-12 text-center">
-                        <i class="fas fa-calendar-times text-gray-400 text-6xl mb-4"></i>
-                        <h3 class="text-xl font-semibold text-gray-600 mb-2">Belum Ada Kegiatan</h3>
-                        <p class="text-gray-500 mb-6">Mulai tambahkan kegiatan pertama Anda</p>
-                        <button onclick="openModal('modalTambah')" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition duration-200">
-                            <i class="fas fa-plus mr-2"></i>
-                            Tambah Kegiatan
-                        </button>
+                    ?>
+                    <div class="col-span-full">
+                        <div class="bg-white rounded-lg shadow-md p-12 text-center">
+                            <i class="fas fa-calendar-times text-gray-400 text-6xl mb-4"></i>
+                            <h3 class="text-xl font-semibold text-gray-600 mb-2">Belum Ada Kegiatan</h3>
+                            <p class="text-gray-500 mb-6">Mulai tambahkan kegiatan pertama Anda</p>
+                            <button onclick="openModal('modalTambah')"
+                                class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition duration-200">
+                                <i class="fas fa-plus mr-2"></i>
+                                Tambah Kegiatan
+                            </button>
+                        </div>
                     </div>
-                </div>
                 <?php } ?>
             </div>
         </main>
@@ -252,24 +270,30 @@ if (isset($_GET['edit'])) {
                 <div class="space-y-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Nama Kegiatan</label>
-                        <input type="text" name="namaKegiatan" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <input type="text" name="namaKegiatan" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Deskripsi</label>
-                        <textarea name="deskripsi" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                        <textarea name="deskripsi" rows="3"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Tanggal</label>
-                        <input type="date" name="tanggal" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <input type="date" name="tanggal" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Lokasi</label>
-                        <input type="text" name="lokasi" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <input type="text" name="lokasi"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                     </div>
                 </div>
                 <div class="flex justify-end space-x-3 mt-6">
-                    <button type="button" onclick="closeModal('modalTambah')" class="px-4 py-2 text-gray-600 bg-gray-200 rounded-md hover:bg-gray-300 transition duration-200">Batal</button>
-                    <button type="submit" name="tambah_kegiatan" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200">Simpan</button>
+                    <button type="button" onclick="closeModal('modalTambah')"
+                        class="px-4 py-2 text-gray-600 bg-gray-200 rounded-md hover:bg-gray-300 transition duration-200">Batal</button>
+                    <button type="submit" name="tambah_kegiatan"
+                        class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200">Simpan</button>
                 </div>
             </form>
         </div>
@@ -277,41 +301,48 @@ if (isset($_GET['edit'])) {
 
     <!-- Modal Edit Kegiatan -->
     <?php if ($editData): ?>
-    <div id="modalEdit" class="modal active fixed inset-0 bg-gray-600 bg-opacity-50 items-center justify-center z-50">
-        <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md mx-4">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-semibold text-gray-900">Edit Kegiatan</h3>
-                <a href="JadwalKegiatan.php" class="text-gray-400 hover:text-gray-600">
-                    <i class="fas fa-times"></i>
-                </a>
+        <div id="modalEdit" class="modal active fixed inset-0 bg-gray-600 bg-opacity-50 items-center justify-center z-50">
+            <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md mx-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-semibold text-gray-900">Edit Kegiatan</h3>
+                    <a href="JadwalKegiatan.php" class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-times"></i>
+                    </a>
+                </div>
+                <form method="POST" action="">
+                    <input type="hidden" name="idKegiatan" value="<?= $editData['idKegiatan'] ?>">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Nama Kegiatan</label>
+                            <input type="text" name="namaKegiatan"
+                                value="<?= htmlspecialchars($editData['namaKegiatan']) ?>" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Deskripsi</label>
+                            <textarea name="deskripsi" rows="3"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"><?= htmlspecialchars($editData['deskripsi']) ?></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Tanggal</label>
+                            <input type="date" name="tanggal" value="<?= $editData['tanggal'] ?>" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Lokasi</label>
+                            <input type="text" name="lokasi" value="<?= htmlspecialchars($editData['lokasi']) ?>"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                    </div>
+                    <div class="flex justify-end space-x-3 mt-6">
+                        <a href="JadwalKegiatan.php"
+                            class="px-4 py-2 text-gray-600 bg-gray-200 rounded-md hover:bg-gray-300 transition duration-200">Batal</a>
+                        <button type="submit" name="edit_kegiatan"
+                            class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200">Update</button>
+                    </div>
+                </form>
             </div>
-            <form method="POST" action="">
-                <input type="hidden" name="idKegiatan" value="<?= $editData['idKegiatan'] ?>">
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Nama Kegiatan</label>
-                        <input type="text" name="namaKegiatan" value="<?= htmlspecialchars($editData['namaKegiatan']) ?>" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Deskripsi</label>
-                        <textarea name="deskripsi" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"><?= htmlspecialchars($editData['deskripsi']) ?></textarea>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Tanggal</label>
-                        <input type="date" name="tanggal" value="<?= $editData['tanggal'] ?>" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Lokasi</label>
-                        <input type="text" name="lokasi" value="<?= htmlspecialchars($editData['lokasi']) ?>" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    </div>
-                </div>
-                <div class="flex justify-end space-x-3 mt-6">
-                    <a href="JadwalKegiatan.php" class="px-4 py-2 text-gray-600 bg-gray-200 rounded-md hover:bg-gray-300 transition duration-200">Batal</a>
-                    <button type="submit" name="edit_kegiatan" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200">Update</button>
-                </div>
-            </form>
         </div>
-    </div>
     <?php endif; ?>
 
     <script>
@@ -324,7 +355,7 @@ if (isset($_GET['edit'])) {
         }
 
         // Close modal when clicking outside
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             const modals = document.getElementsByClassName('modal');
             for (let i = 0; i < modals.length; i++) {
                 if (event.target === modals[i]) {
@@ -335,18 +366,18 @@ if (isset($_GET['edit'])) {
 
         // Auto hide success message after 5 seconds
         <?php if ($message && $messageType === 'success'): ?>
-        setTimeout(function() {
-            const alert = document.querySelector('.bg-green-100');
-            if (alert) {
-                alert.style.transition = 'opacity 0.5s';
-                alert.style.opacity = '0';
-                setTimeout(() => alert.remove(), 500);
-            }
-        }, 5000);
+            setTimeout(function () {
+                const alert = document.querySelector('.bg-green-100');
+                if (alert) {
+                    alert.style.transition = 'opacity 0.5s';
+                    alert.style.opacity = '0';
+                    setTimeout(() => alert.remove(), 500);
+                }
+            }, 5000);
         <?php endif; ?>
 
         // Set minimum date to today for date input
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const dateInputs = document.querySelectorAll('input[type="date"]');
             const today = new Date().toISOString().split('T')[0];
             dateInputs.forEach(input => {
@@ -357,4 +388,5 @@ if (isset($_GET['edit'])) {
         });
     </script>
 </body>
+
 </html>

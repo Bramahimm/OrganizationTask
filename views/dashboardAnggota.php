@@ -17,11 +17,14 @@ $result = mysqli_query($conn, $query);
 
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8" />
   <title>Orgenius-Dashboard Anggota</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
   <style>
     body {
       font-family: 'Inter', sans-serif;
@@ -42,7 +45,8 @@ $result = mysqli_query($conn, $query);
     <!-- Profil User -->
     <div class="flex items-center gap-3">
       <span class="font-semibold"><?= htmlspecialchars($namaUser) ?></span>
-      <img src="https://ui-avatars.com/api/?name=<?= urlencode($namaUser) ?>" class="w-10 h-10 rounded-full" alt="Avatar">
+      <img src="https://ui-avatars.com/api/?name=<?= urlencode($namaUser) ?>" class="w-10 h-10 rounded-full"
+        alt="Avatar">
     </div>
   </nav>
 
@@ -52,10 +56,15 @@ $result = mysqli_query($conn, $query);
     <aside class="w-64 bg-white shadow-md h-screen fixed left-0 top-16">
       <nav class="p-6">
         <ul class="space-y-3">
-          <li><a href="dashboardAnggota.php" class="flex items-center p-3 bg-blue-600 text-white rounded-md hover:bg-blue-700"><span class="ml-3">Dashboard</span></a></li>
-          <li><a href="tugasAnggota.php" class="flex items-center p-3 hover:bg-gray-100 rounded-md"><span class="ml-3">Tugas</span></a></li>
-          <li><a href="jadwalKegiatan.php" class="flex items-center p-3 hover:bg-gray-100 rounded-md"><span class="ml-3">Jadwal Kegiatan</span></a></li>
-          <li><a href="../process/logout.php" class="flex items-center p-3 hover:bg-red-100 text-red-700 rounded-md"><span class="ml-3">Logout</span></a></li>
+          <li><a href="dashboardAnggota.php" class="flex items-center p-3 hover:bg-blue-700 bg-blue-600 rounded-md"><i
+                class="fas fa-home w-5"></i><span class="ml-3">Dashboard</span></a></li>
+          <li><a href="tugasAnggota.php" class="flex items-center p-3 hover:bg-gray-100 rounded-md"><i
+                class="fas fa-tasks w-5"></i><span class="ml-3">Tugas</span></a></li>
+          <li><a href="jadwalKegiatan.php"
+              class="flex items-center p-3 text-black rounded-md hover:bg-gray-100"><i
+                class="fas fa-calendar w-5"></i><span class="ml-3">Jadwal Kegiatan</span></a></li>
+          <li><a href="../process/logout.php" class="flex items-center p-3 hover:bg-red-100 text-red-700 rounded-md"><i
+                class="fas fa-sign-out-alt w-5"></i><span class="ml-3">Logout</span></a></li>
         </ul>
       </nav>
     </aside>
@@ -107,4 +116,5 @@ $result = mysqli_query($conn, $query);
   </div>
 
 </body>
+
 </html>

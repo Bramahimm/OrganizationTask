@@ -15,6 +15,8 @@ $namaUser = $_SESSION['user']['nama'];
   <title>Dashboard Pengurus - TaskUKM</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
   <style>
     body {
       font-family: 'Inter', sans-serif;
@@ -46,8 +48,8 @@ $namaUser = $_SESSION['user']['nama'];
     <aside class="w-64 bg-white shadow-md h-screen fixed left-0 top-16">
       <nav class="p-6">
         <ul class="space-y-3">
-          <li><a href="#" class="flex items-center p-3 bg-blue-600 text-white rounded-md hover:bg-blue-700"><span
-                class="ml-3">Dashboard</span></a></li>
+          <li><a href="#" class="flex items-center p-3 hover:bg-blue-700 bg-blue-600 rounded-md"><i
+                class="fas fa-home w-5"></i><span class="ml-3">Dashboard</span></a></li>
           <li><a href="#" class="flex items-center p-3 hover:bg-gray-100 rounded-md"><span class="ml-3">Tugas</span></a>
           </li>
           <li><a href="#" class="flex items-center p-3 hover:bg-gray-100 rounded-md"><span class="ml-3">Jadwal

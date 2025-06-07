@@ -21,9 +21,9 @@ if (isset($_POST['tambah_tugas'])) {
     $deskripsi = mysqli_real_escape_string($conn, $_POST['deskripsi']);
     $deadline = mysqli_real_escape_string($conn, $_POST['deadline']);
     $status = mysqli_real_escape_string($conn, $_POST['status']);
-    
+
     $query = "INSERT INTO tugas (judul, deskripsi, deadline, status, idUser) VALUES ('$judul', '$deskripsi', '$deadline', '$status', '$idUser')";
-    
+
     if (mysqli_query($conn, $query)) {
         $message = "Tugas berhasil ditambahkan!";
         $messageType = "success";
@@ -40,9 +40,9 @@ if (isset($_POST['edit_tugas'])) {
     $deskripsi = mysqli_real_escape_string($conn, $_POST['deskripsi']);
     $deadline = mysqli_real_escape_string($conn, $_POST['deadline']);
     $status = mysqli_real_escape_string($conn, $_POST['status']);
-    
+
     $query = "UPDATE tugas SET judul='$judul', deskripsi='$deskripsi', deadline='$deadline', status='$status' WHERE idTugas='$idTugas' AND idUser='$idUser'";
-    
+
     if (mysqli_query($conn, $query)) {
         $message = "Tugas berhasil diupdate!";
         $messageType = "success";
@@ -56,7 +56,7 @@ if (isset($_POST['edit_tugas'])) {
 if (isset($_GET['hapus'])) {
     $idTugas = mysqli_real_escape_string($conn, $_GET['hapus']);
     $query = "DELETE FROM tugas WHERE idTugas='$idTugas' AND idUser='$idUser'";
-    
+
     if (mysqli_query($conn, $query)) {
         $message = "Tugas berhasil dihapus!";
         $messageType = "success";
@@ -82,6 +82,7 @@ if (isset($_GET['edit'])) {
 
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -93,9 +94,11 @@ if (isset($_GET['edit'])) {
         body {
             font-family: 'Inter', sans-serif;
         }
+
         .modal {
             display: none;
         }
+
         .modal.active {
             display: flex;
         }
@@ -114,7 +117,8 @@ if (isset($_GET['edit'])) {
         <!-- Profil User -->
         <div class="flex items-center gap-3">
             <span class="font-semibold"><?= htmlspecialchars($namaUser) ?></span>
-            <img src="https://ui-avatars.com/api/?name=<?= urlencode($namaUser) ?>" class="w-10 h-10 rounded-full" alt="Avatar">
+            <img src="https://ui-avatars.com/api/?name=<?= urlencode($namaUser) ?>" class="w-10 h-10 rounded-full"
+                alt="Avatar">
         </div>
     </nav>
 
@@ -124,10 +128,16 @@ if (isset($_GET['edit'])) {
         <aside class="w-64 bg-white shadow-md h-screen fixed left-0 top-16">
             <nav class="p-6">
                 <ul class="space-y-3">
-                    <li><a href="dashboardAnggota.php" class="flex items-center p-3 hover:bg-gray-100 rounded-md"><i class="fas fa-home w-5"></i><span class="ml-3">Dashboard</span></a></li>
-                    <li><a href="tugasAnggota.php" class="flex items-center p-3 bg-blue-600 text-white rounded-md hover:bg-blue-700"><i class="fas fa-tasks w-5"></i><span class="ml-3">Tugas</span></a></li>
-                    <li><a href="jadwalKegiatan.php" class="flex items-center p-3 hover:bg-gray-100 rounded-md"><i class="fas fa-calendar w-5"></i><span class="ml-3">Jadwal Kegiatan</span></a></li>
-                    <li><a href="../process/logout.php" class="flex items-center p-3 hover:bg-red-100 text-red-700 rounded-md"><i class="fas fa-sign-out-alt w-5"></i><span class="ml-3">Logout</span></a></li>
+                    <li><a href="dashboardAnggota.php" class="flex items-center p-3 hover:bg-gray-100 rounded-md"><i
+                                class="fas fa-home w-5"></i><span class="ml-3">Dashboard</span></a></li>
+                    <li><a href="tugasAnggota.php"
+                            class="flex items-center p-3 bg-blue-600 text-white rounded-md hover:bg-blue-700"><i
+                                class="fas fa-tasks w-5"></i><span class="ml-3">Tugas</span></a></li>
+                    <li><a href="jadwalKegiatan.php" class="flex items-center p-3 hover:bg-gray-100 rounded-md"><i
+                                class="fas fa-calendar w-5"></i><span class="ml-3">Jadwal Kegiatan</span></a></li>
+                    <li><a href="../process/logout.php"
+                            class="flex items-center p-3 hover:bg-red-100 text-red-700 rounded-md"><i
+                                class="fas fa-sign-out-alt w-5"></i><span class="ml-3">Logout</span></a></li>
                 </ul>
             </nav>
         </aside>
@@ -137,7 +147,8 @@ if (isset($_GET['edit'])) {
             <!-- Header -->
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-bold text-gray-800">Manajemen Tugas</h2>
-                <button onclick="openModal('modalTambah')" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition duration-200">
+                <button onclick="openModal('modalTambah')"
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition duration-200">
                     <i class="fas fa-plus"></i>
                     Tambah Tugas
                 </button>
@@ -145,10 +156,11 @@ if (isset($_GET['edit'])) {
 
             <!-- Pesan Notifikasi -->
             <?php if ($message): ?>
-            <div class="mb-6 p-4 rounded-lg <?= $messageType === 'success' ? 'bg-green-100 text-green-700 border border-green-200' : 'bg-red-100 text-red-700 border border-red-200' ?>">
-                <i class="fas <?= $messageType === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle' ?> mr-2"></i>
-                <?= htmlspecialchars($message) ?>
-            </div>
+                <div
+                    class="mb-6 p-4 rounded-lg <?= $messageType === 'success' ? 'bg-green-100 text-green-700 border border-green-200' : 'bg-red-100 text-red-700 border border-red-200' ?>">
+                    <i class="fas <?= $messageType === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle' ?> mr-2"></i>
+                    <?= htmlspecialchars($message) ?>
+                </div>
             <?php endif; ?>
 
             <!-- Tabel Tugas -->
@@ -160,12 +172,24 @@ if (isset($_GET['edit'])) {
                     <table class="w-full">
                         <thead class="bg-gray-100">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Judul Tugas</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Deskripsi</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Deadline</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    No</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Judul Tugas</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Deskripsi</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Deadline</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Status</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
@@ -175,7 +199,7 @@ if (isset($_GET['edit'])) {
                                 while ($data = mysqli_fetch_assoc($result)) {
                                     $statusColor = '';
                                     $statusText = '';
-                                    switch($data['status']) {
+                                    switch ($data['status']) {
                                         case 'belum':
                                             $statusColor = 'bg-red-100 text-red-800';
                                             $statusText = 'Belum Mulai';
@@ -189,44 +213,50 @@ if (isset($_GET['edit'])) {
                                             $statusText = 'Selesai';
                                             break;
                                     }
-                            ?>
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?= $no++ ?></td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm font-medium text-gray-900"><?= htmlspecialchars($data['judul']) ?></div>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="text-sm text-gray-900 max-w-xs truncate"><?= htmlspecialchars($data['deskripsi']) ?></div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                    <?= date('d/m/Y', strtotime($data['deadline'])) ?>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full <?= $statusColor ?>">
-                                        <?= $statusText ?>
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <div class="flex space-x-2">
-                                        <a href="?edit=<?= $data['idTugas'] ?>" class="text-blue-600 hover:text-blue-900 bg-blue-100 hover:bg-blue-200 px-3 py-1 rounded-md transition duration-200">
-                                            <i class="fas fa-edit"></i> Edit
-                                        </a>
-                                        <a href="?hapus=<?= $data['idTugas'] ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus tugas ini?')" class="text-red-600 hover:text-red-900 bg-red-100 hover:bg-red-200 px-3 py-1 rounded-md transition duration-200">
-                                            <i class="fas fa-trash"></i> Hapus
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <?php
+                                    ?>
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?= $no++ ?></td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm font-medium text-gray-900">
+                                                <?= htmlspecialchars($data['judul']) ?></div>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="text-sm text-gray-900 max-w-xs truncate">
+                                                <?= htmlspecialchars($data['deskripsi']) ?></div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            <?= date('d/m/Y', strtotime($data['deadline'])) ?>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span
+                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full <?= $statusColor ?>">
+                                                <?= $statusText ?>
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            <div class="flex space-x-2">
+                                                <a href="?edit=<?= $data['idTugas'] ?>"
+                                                    class="text-blue-600 hover:text-blue-900 bg-blue-100 hover:bg-blue-200 px-3 py-1 rounded-md transition duration-200">
+                                                    <i class="fas fa-edit"></i> Edit
+                                                </a>
+                                                <a href="?hapus=<?= $data['idTugas'] ?>"
+                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus tugas ini?')"
+                                                    class="text-red-600 hover:text-red-900 bg-red-100 hover:bg-red-200 px-3 py-1 rounded-md transition duration-200">
+                                                    <i class="fas fa-trash"></i> Hapus
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <?php
                                 }
                             } else {
-                            ?>
-                            <tr>
-                                <td colspan="6" class="px-6 py-4 text-center text-gray-500">
-                                    <i class="fas fa-inbox text-4xl mb-2"></i>
-                                    <p>Belum ada tugas yang dibuat</p>
-                                </td>
-                            </tr>
+                                ?>
+                                <tr>
+                                    <td colspan="6" class="px-6 py-4 text-center text-gray-500">
+                                        <i class="fas fa-inbox text-4xl mb-2"></i>
+                                        <p>Belum ada tugas yang dibuat</p>
+                                    </td>
+                                </tr>
                             <?php } ?>
                         </tbody>
                     </table>
@@ -248,19 +278,23 @@ if (isset($_GET['edit'])) {
                 <div class="space-y-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Judul Tugas</label>
-                        <input type="text" name="judul" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <input type="text" name="judul" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Deskripsi</label>
-                        <textarea name="deskripsi" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                        <textarea name="deskripsi" rows="3"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Deadline</label>
-                        <input type="date" name="deadline" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <input type="date" name="deadline" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                        <select name="status" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <select name="status"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                             <option value="belum">Belum Mulai</option>
                             <option value="proses">Dalam Proses</option>
                             <option value="selesai">Selesai</option>
@@ -268,8 +302,10 @@ if (isset($_GET['edit'])) {
                     </div>
                 </div>
                 <div class="flex justify-end space-x-3 mt-6">
-                    <button type="button" onclick="closeModal('modalTambah')" class="px-4 py-2 text-gray-600 bg-gray-200 rounded-md hover:bg-gray-300 transition duration-200">Batal</button>
-                    <button type="submit" name="tambah_tugas" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200">Simpan</button>
+                    <button type="button" onclick="closeModal('modalTambah')"
+                        class="px-4 py-2 text-gray-600 bg-gray-200 rounded-md hover:bg-gray-300 transition duration-200">Batal</button>
+                    <button type="submit" name="tambah_tugas"
+                        class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200">Simpan</button>
                 </div>
             </form>
         </div>
@@ -277,45 +313,54 @@ if (isset($_GET['edit'])) {
 
     <!-- Modal Edit Tugas -->
     <?php if ($editData): ?>
-    <div id="modalEdit" class="modal active fixed inset-0 bg-gray-600 bg-opacity-50 items-center justify-center z-50">
-        <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md mx-4">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-semibold text-gray-900">Edit Tugas</h3>
-                <a href="tugas.php" class="text-gray-400 hover:text-gray-600">
-                    <i class="fas fa-times"></i>
-                </a>
+        <div id="modalEdit" class="modal active fixed inset-0 bg-gray-600 bg-opacity-50 items-center justify-center z-50">
+            <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md mx-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-semibold text-gray-900">Edit Tugas</h3>
+                    <a href="tugas.php" class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-times"></i>
+                    </a>
+                </div>
+                <form method="POST" action="">
+                    <input type="hidden" name="idTugas" value="<?= $editData['idTugas'] ?>">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Judul Tugas</label>
+                            <input type="text" name="judul" value="<?= htmlspecialchars($editData['judul']) ?>" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Deskripsi</label>
+                            <textarea name="deskripsi" rows="3"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"><?= htmlspecialchars($editData['deskripsi']) ?></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Deadline</label>
+                            <input type="date" name="deadline" value="<?= $editData['deadline'] ?>" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                            <select name="status"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="belum" <?= $editData['status'] === 'belum' ? 'selected' : '' ?>>Belum Mulai
+                                </option>
+                                <option value="proses" <?= $editData['status'] === 'proses' ? 'selected' : '' ?>>Dalam Proses
+                                </option>
+                                <option value="selesai" <?= $editData['status'] === 'selesai' ? 'selected' : '' ?>>Selesai
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="flex justify-end space-x-3 mt-6">
+                        <a href="tugas.php"
+                            class="px-4 py-2 text-gray-600 bg-gray-200 rounded-md hover:bg-gray-300 transition duration-200">Batal</a>
+                        <button type="submit" name="edit_tugas"
+                            class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200">Update</button>
+                    </div>
+                </form>
             </div>
-            <form method="POST" action="">
-                <input type="hidden" name="idTugas" value="<?= $editData['idTugas'] ?>">
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Judul Tugas</label>
-                        <input type="text" name="judul" value="<?= htmlspecialchars($editData['judul']) ?>" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Deskripsi</label>
-                        <textarea name="deskripsi" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"><?= htmlspecialchars($editData['deskripsi']) ?></textarea>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Deadline</label>
-                        <input type="date" name="deadline" value="<?= $editData['deadline'] ?>" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                        <select name="status" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                            <option value="belum" <?= $editData['status'] === 'belum' ? 'selected' : '' ?>>Belum Mulai</option>
-                            <option value="proses" <?= $editData['status'] === 'proses' ? 'selected' : '' ?>>Dalam Proses</option>
-                            <option value="selesai" <?= $editData['status'] === 'selesai' ? 'selected' : '' ?>>Selesai</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="flex justify-end space-x-3 mt-6">
-                    <a href="tugas.php" class="px-4 py-2 text-gray-600 bg-gray-200 rounded-md hover:bg-gray-300 transition duration-200">Batal</a>
-                    <button type="submit" name="edit_tugas" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200">Update</button>
-                </div>
-            </form>
         </div>
-    </div>
     <?php endif; ?>
 
     <script>
@@ -328,7 +373,7 @@ if (isset($_GET['edit'])) {
         }
 
         // Close modal when clicking outside
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             const modals = document.getElementsByClassName('modal');
             for (let i = 0; i < modals.length; i++) {
                 if (event.target === modals[i]) {
@@ -339,15 +384,16 @@ if (isset($_GET['edit'])) {
 
         // Auto hide success message after 5 seconds
         <?php if ($message && $messageType === 'success'): ?>
-        setTimeout(function() {
-            const alert = document.querySelector('.bg-green-100');
-            if (alert) {
-                alert.style.transition = 'opacity 0.5s';
-                alert.style.opacity = '0';
-                setTimeout(() => alert.remove(), 500);
-            }
-        }, 5000);
+            setTimeout(function () {
+                const alert = document.querySelector('.bg-green-100');
+                if (alert) {
+                    alert.style.transition = 'opacity 0.5s';
+                    alert.style.opacity = '0';
+                    setTimeout(() => alert.remove(), 500);
+                }
+            }, 5000);
         <?php endif; ?>
     </script>
 </body>
+
 </html>

@@ -53,7 +53,7 @@ $namaUser = $_SESSION['user']['nama'];
                 class="fas fa-home w-5"></i><span class="ml-3">Dashboard</span></a></li>
           <li><a href="#" class="flex items-center p-3 hover:bg-gray-100 rounded-md"><i
                 class="fas fa-tasks w-5"></i><span class="ml-3">Tugas</span></a></li>
-          <li><a href="#" class="flex items-center p-3 text-black rounded-md hover:bg-gray-100"><i
+          <li><a href="jadwalKegiatanPengurus.php" class="flex items-center p-3 text-black rounded-md hover:bg-gray-100"><i
                 class="fas fa-calendar w-5"></i><span class="ml-3">Jadwal Kegiatan</span></a></li>
           <li><a href="../process/logout.php" class="flex items-center p-3 hover:bg-red-100 text-red-700 rounded-md"><i
                 class="fas fa-sign-out-alt w-5"></i><span class="ml-3">Logout</span></a></li>

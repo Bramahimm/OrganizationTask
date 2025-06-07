@@ -16,11 +16,47 @@ $namaUser = $_SESSION['user']['nama'];
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<<<<<<< HEAD
   <link rel="icon" type="image/x-png" href="assets/img/orgenius.png">
 
+=======
+>>>>>>> 2ee7c60cefb6843a698359f6595910f920c23d28
   <style>
     body {
       font-family: 'Inter', sans-serif;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.4);
+    }
+    .modal-content {
+      background-color: #fefefe;
+      margin: 5% auto;
+      padding: 20px;
+      border: none;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
     }
   </style>
 </head>
@@ -46,20 +82,17 @@ $namaUser = $_SESSION['user']['nama'];
   <!-- Layout utama -->
   <div class="flex pt-16">
     <!-- Sidebar -->
+
     <aside class="w-64 bg-white shadow-md h-screen fixed left-0 top-16">
-      <nav class="p-6">
-        <ul class="space-y-3">
-          <li><a href="#" class="flex items-center p-3 hover:bg-blue-700 bg-blue-600 rounded-md"><i
-                class="fas fa-home w-5"></i><span class="ml-3">Dashboard</span></a></li>
-          <li><a href="#" class="flex items-center p-3 hover:bg-gray-100 rounded-md"><i
-                class="fas fa-tasks w-5"></i><span class="ml-3">Tugas</span></a></li>
-          <li><a href="jadwalKegiatanPengurus.php" class="flex items-center p-3 text-black rounded-md hover:bg-gray-100"><i
-                class="fas fa-calendar w-5"></i><span class="ml-3">Jadwal Kegiatan</span></a></li>
-          <li><a href="../process/logout.php" class="flex items-center p-3 hover:bg-red-100 text-red-700 rounded-md"><i
-                class="fas fa-sign-out-alt w-5"></i><span class="ml-3">Logout</span></a></li>
-        </ul>
-      </nav>
-    </aside>
+            <nav class="p-6">
+                <ul class="space-y-3">
+                    <li><a href="dashboardPengurus.php" class="flex items-center p-3 bg-blue-600 text-white rounded-md hover:bg-blue-700"><i class="fas fa-home w-5"></i><span class="ml-3">Dashboard</span></a></li>
+                    <li><a href="tugasPengurus.php" class="flex items-center p-3 hover:bg-gray-100 rounded-md"><i class="fas fa-tasks w-5"></i><span class="ml-3">Tugas</span></a></li>
+                    <li><a href="jadwalKegiatanPengurus.php" class="flex items-center p-3 hover:bg-gray-100 rounded-md"><i class="fas fa-calendar w-5"></i><span class="ml-3">Jadwal Kegiatan</span></a></li>
+                    <li><a href="../process/logout.php" class="flex items-center p-3 hover:bg-red-100 text-red-700 rounded-md"><i class="fas fa-sign-out-alt w-5"></i><span class="ml-3">Logout</span></a></li>
+                </ul>
+            </nav>
+      </aside>
 
     <!-- Konten Utama -->
     <main class="flex-1 p-6 ml-64">
@@ -97,7 +130,7 @@ $namaUser = $_SESSION['user']['nama'];
       $idUser = $_SESSION['user']['id'];
 
       // Query untuk mengambil tugas berdasarkan idUser
-      $query = "SELECT * FROM tugas WHERE idUser = '$idUser' ORDER BY deadline ASC";
+      $query = "SELECT * FROM tugas ORDER BY deadline ASC";
       $result = mysqli_query($conn, $query);
       ?>
 
@@ -132,7 +165,10 @@ $namaUser = $_SESSION['user']['nama'];
                     <?= ucfirst($data['status']); ?>
                   </td>
                   <td class="p-2 text-center">
-                    <a href="#" class="text-blue-600 hover:underline">Detail</a>
+                    <button onclick="showTaskDetail(<?= htmlspecialchars(json_encode($data)) ?>)" 
+                            class="text-blue-600 hover:underline cursor-pointer">
+                      Detail
+                    </button>
                   </td>
                 </tr>
                 <?php
@@ -143,9 +179,112 @@ $namaUser = $_SESSION['user']['nama'];
         </div>
       </div>
 
-
     </main>
   </div>
+
+  <!-- Modal Detail Tugas -->
+  <div id="taskModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <div class="mb-4">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Detail Tugas</h2>
+        
+        <div class="space-y-4">
+          <div class="border-b pb-3">
+            <label class="block text-sm font-semibold text-gray-600 mb-1">ID Tugas</label>
+            <p id="modal-id" class="text-gray-800"></p>
+          </div>
+          
+          <div class="border-b pb-3">
+            <label class="block text-sm font-semibold text-gray-600 mb-1">Judul Tugas</label>
+            <p id="modal-judul" class="text-gray-800 font-semibold"></p>
+          </div>
+          
+          <div class="border-b pb-3">
+            <label class="block text-sm font-semibold text-gray-600 mb-1">Deskripsi</label>
+            <p id="modal-deskripsi" class="text-gray-800"></p>
+          </div>
+          
+          <div class="border-b pb-3">
+            <label class="block text-sm font-semibold text-gray-600 mb-1">Deadline</label>
+            <p id="modal-deadline" class="text-gray-800"></p>
+          </div>
+          
+          <div class="border-b pb-3">
+            <label class="block text-sm font-semibold text-gray-600 mb-1">Status</label>
+            <p id="modal-status" class="font-semibold"></p>
+          </div>
+          
+          <div class="border-b pb-3">
+            <label class="block text-sm font-semibold text-gray-600 mb-1">ID User</label>
+            <p id="modal-iduser" class="text-gray-800"></p>
+          </div>
+        </div>
+        
+        <div class="mt-6 flex justify-end">
+          <button onclick="closeModal()" 
+                  class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md">
+            Tutup
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showTaskDetail(taskData) {
+      // Mengisi data ke modal
+      document.getElementById('modal-id').textContent = taskData.idTugas || '-';
+      document.getElementById('modal-judul').textContent = taskData.judul || '-';
+      document.getElementById('modal-deskripsi').textContent = taskData.deskripsi || '-';
+      document.getElementById('modal-iduser').textContent = taskData.idUser || '-';
+      
+      // Format tanggal
+      if (taskData.deadline) {
+        const date = new Date(taskData.deadline);
+        const formattedDate = date.toLocaleDateString('id-ID', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric'
+        });
+        document.getElementById('modal-deadline').textContent = formattedDate;
+      } else {
+        document.getElementById('modal-deadline').textContent = '-';
+      }
+      
+      // Status dengan warna
+      const statusElement = document.getElementById('modal-status');
+      statusElement.textContent = taskData.status ? taskData.status.charAt(0).toUpperCase() + taskData.status.slice(1) : '-';
+      
+      if (taskData.status === 'Selesai') {
+        statusElement.className = 'font-semibold text-green-600';
+      } else {
+        statusElement.className = 'font-semibold text-red-600';
+      }
+      
+      // Tampilkan modal
+      document.getElementById('taskModal').style.display = 'block';
+    }
+
+    function closeModal() {
+      document.getElementById('taskModal').style.display = 'none';
+    }
+
+    // Tutup modal ketika klik di luar modal
+    window.onclick = function(event) {
+      const modal = document.getElementById('taskModal');
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    }
+
+    // Tutup modal dengan tombol ESC
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        closeModal();
+      }
+    });
+  </script>
 
 </body>
 

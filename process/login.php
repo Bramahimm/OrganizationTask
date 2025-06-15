@@ -2,6 +2,7 @@
 session_start();
 include '../includes/database.php';
 
+
 $email = mysqli_real_escape_string($conn, $_POST['email']);
 $password = $_POST['password'];
 

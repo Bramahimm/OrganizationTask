@@ -1,23 +1,20 @@
 <?php
 session_start();
-include '../includes/database.php'; 
-include '../includes/helpers.php';
+include '../includes/database.php';
 
 $title = 'Orgenius - Anggota';
-include '../layout/header.php';
 
-checkPengurusAccess();
 $namaUser = $_SESSION['user']['nama'];
 $idUser = $_SESSION['user']['id'];
 
-// untuk mbil data tugas berdasarkan idUser dari database
+// untuk ambil data tugas berdasarkan idUser dari database
 $query = "SELECT * FROM tugas WHERE idUser = '$idUser' ORDER BY deadline ASC";
 $result = mysqli_query($conn, $query);
 
-include '../layout/navbar.php';
-include '../layout/sidebar.php';
 ?>
-
+<?php include '../layout/header.php';?>
+<?php include '../layout/navbar.php';?>
+<?php include '../layout/sidebar.php';?>
 <!-- Konten Utama -->
 <main class="flex-1 p-6 ml-64">
   <div class="flex justify-between items-center mb-6">
@@ -63,4 +60,3 @@ include '../layout/sidebar.php';
   </div>
 </main>
 
-<?php include '../layout/footer.php'; ?>

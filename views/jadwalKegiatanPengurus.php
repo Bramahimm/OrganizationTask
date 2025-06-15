@@ -2,7 +2,7 @@
 session_start();
 include '../includes/database.php'; // Koneksi ke database
 
-// Pastikan user telah login dan memiliki role "pengurus"
+// buat mastiin user uda login dan memiliki role "pengurus"
 if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'pengurus') {
     header("Location: ../index.php");
     exit;

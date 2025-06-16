@@ -66,7 +66,7 @@ if (isset($_GET['hapus'])) {
         $messageType = "error";
     }
 }
-brnabrabra
+
 // READ - Ambil data kegiatan
 $query = "SELECT * FROM kegiatan ORDER BY tanggal ASC";
 $result = mysqli_query($conn, $query);

@@ -4,63 +4,13 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'pengurus') {
   header("Location: ../index.php");
   exit;
 }
+$title = 'Orgenius - Pengurus';
 $namaUser = $_SESSION['user']['nama'];
 ?>
 
 <!DOCTYPE html>
 <html lang="id">
-
-<head>
-  <meta charset="UTF-8">
-  <title>Dashboard Pengurus - TaskUKM</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-<<<<<<< HEAD
-  <link rel="icon" type="image/x-png" href="assets/img/orgenius.png">
-
-=======
->>>>>>> 2ee7c60cefb6843a698359f6595910f920c23d28
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-    }
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0,0,0,0.4);
-    }
-    .modal-content {
-      background-color: #fefefe;
-      margin: 5% auto;
-      padding: 20px;
-      border: none;
-      border-radius: 10px;
-      width: 90%;
-      max-width: 600px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .close {
-      color: #aaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .close:hover,
-    .close:focus {
-      color: black;
-      text-decoration: none;
-    }
-  </style>
-</head>
-
+<?php include '../layout/header.php'?>
 <body class="bg-gray-50">
 
   <!-- Navbar -->

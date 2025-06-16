@@ -83,27 +83,7 @@ if (isset($_GET['edit'])) {
 <!DOCTYPE html>
 <html lang="id">
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orgenius - Jadwal Kegiatan</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-
-        .modal {
-            display: none;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-    </style>
-</head>
+<?php include '../layout/header.php'?>
 
 <body class="bg-gray-100">
     <!-- Navbar -->
@@ -346,24 +326,6 @@ if (isset($_GET['edit'])) {
     <?php endif; ?>
 
     <script>
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.add('active');
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-        }
-
-        // Close modal when clicking outside
-        window.onclick = function (event) {
-            const modals = document.getElementsByClassName('modal');
-            for (let i = 0; i < modals.length; i++) {
-                if (event.target === modals[i]) {
-                    modals[i].classList.remove('active');
-                }
-            }
-        }
-
         // Auto hide success message after 5 seconds
         <?php if ($message && $messageType === 'success'): ?>
             setTimeout(function () {
@@ -375,18 +337,8 @@ if (isset($_GET['edit'])) {
                 }
             }, 5000);
         <?php endif; ?>
-
-        // Set minimum date to today for date input
-        document.addEventListener('DOMContentLoaded', function () {
-            const dateInputs = document.querySelectorAll('input[type="date"]');
-            const today = new Date().toISOString().split('T')[0];
-            dateInputs.forEach(input => {
-                if (!input.value) {
-                    input.min = today;
-                }
-            });
-        });
     </script>
+    <script src="../assets/js/main.js"></script>
 </body>
 
 </html>

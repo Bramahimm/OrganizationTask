@@ -32,17 +32,21 @@ function isAnggota() {
     return isset($_SESSION['user']) && $_SESSION['user']['role'] === 'anggota';
 }
 function redirectWithError($type) {
-    header("Location: ../index.php?error=$type");
+    header("Location: index.php?route=login&error=$type");
     exit;
 }
 
 function redirectToDashboard($role) {
-    if ($role === 'pengurus') {
-        header("Location: ../dashboardPengurus.php");
-    } elseif ($role === 'anggota') {
-        header("Location: ../dashboardAnggota.php");
-    } else {
-        header("Location: ../index.php");
-    }
+    $target = $role === 'pengurus' ? 'dashboard' : 'dashboard';
+    header("Location: index.php?route=$target");
     exit;
+}
+function getPendingRequestCount($conn, $idUser) {
+    $stmt = $conn->prepare("SELECT COUNT(*) as total FROM request_organisasi r
+    JOIN user_organisasi uo ON r.idOrganisasi = uo.idOrganisasi
+    WHERE uo.idUser = ? AND uo.role = 'pengurus' AND r.status = 'pending'");
+    $stmt->bind_param("i", $idUser);
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_assoc();
+    return $result['total'] ?? 0;
 }

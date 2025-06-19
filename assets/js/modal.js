@@ -1,14 +1,17 @@
-// File: assets/js/modal.js
-
-function showModal(modalId) {
-  const modal = document.getElementById(modalId);
-  if (modal) modal.classList.remove('hidden');
+function openModal(id) {
+  const modal = document.getElementById(id);
+  if (modal) {
+    modal.classList.remove('hidden');
+  }
 }
 
-function closeModal(modalId = 'taskModal') {
-  const modal = document.getElementById(modalId);
-  if (modal) modal.classList.add('hidden');
+function closeModal(id) {
+  const modal = document.getElementById(id);
+  if (modal) {
+    modal.classList.add('hidden');
+  }
 }
+
 
 // Utility to fill modal content for task detail
 function fillTaskModal(taskData) {
@@ -46,3 +49,12 @@ window.addEventListener('click', function(event) {
 document.addEventListener('keydown', function(event) {
   if (event.key === 'Escape') closeModal('taskModal');
 });
+
+function confirmHapus(id) {
+    const modal = document.getElementById('modalHapus');
+    const link = document.getElementById('btnHapusLink');
+    if (modal && link) {
+        link.href = `index.php?route=tugas&hapus=${id}`;
+        modal.classList.remove('hidden');
+    }
+}

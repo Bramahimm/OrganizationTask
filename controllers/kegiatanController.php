@@ -9,6 +9,13 @@ $idUser = $_SESSION['user']['id'];
 $message = '';
 $messageType = '';
 $editData = null;
+$query = "SELECT idOrganisasi FROM user_organisasi WHERE idUser = ? AND role = 'pengurus' LIMIT 1";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $idUser);
+$stmt->execute();
+$stmt->bind_result($idOrganisasi);
+$stmt->fetch();
+$stmt->close();
 
 if (isset($_POST['tambah_kegiatan'])) {
   $result = Kegiatan::tambah($conn, $_POST, $idUser);

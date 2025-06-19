@@ -42,4 +42,4 @@ if (isset($_GET['edit'])) {
 }
 
 $title = 'Tugas';
-include __DIR__ . '/../views/tugasPengurus.php';
+include __DIR__ . '/../views/tugas.php';

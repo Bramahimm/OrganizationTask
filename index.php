@@ -12,6 +12,17 @@ switch ($route) {
         }
         break;
 
+    case 'register':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            require_once 'includes/register.php';
+        } else {
+            include 'views/register.php';
+        }
+        break;
+
+
+
+
     case 'dashboard':
         if (!isset($_SESSION['user'])) {
             header("Location: index.php?route=login");
@@ -21,13 +32,12 @@ switch ($route) {
         $role = $_SESSION['user']['role'];
 
         if ($role === 'pengurus') {
-            include 'controllers/DashboardPengurusController.php';
+            include 'controllers/dashboardPengurusController.php';
         } elseif ($role === 'anggota') {
             include 'controllers/DashboardAnggotaController.php';
-        } else {
-            echo "<h1>403 - Role tidak dikenali</h1>";
         }
         break;
+
 
     case 'jadwal-kegiatan-pengurus':
         include 'controllers/kegiatanController.php';
@@ -52,5 +62,42 @@ switch ($route) {
 
     case 'tugas':
         include 'controllers/tugasController.php';
+        break;
+
+    case 'jadwal-kegiatan-pengurus':
+        include 'controllers/kegiatanPengurusController.php';
+        break;
+
+    case 'jadwal-kegiatan-anggota':
+        include 'controllers/jadwalKegiatanAnggotaController.php';
+        break;
+
+
+    case 'request-organisasi':
+        require_once 'includes/init.php';
+        $idUser = $_SESSION['user']['id'];
+        $idOrganisasi = (int) ($_POST['idOrganisasi'] ?? 0);
+
+        if ($idOrganisasi > 0) {
+            $stmt = $conn->prepare("INSERT INTO request_organisasi (idUser, idOrganisasi) VALUES (?, ?)");
+            $stmt->bind_param("ii", $idUser, $idOrganisasi);
+            $stmt->execute();
+        }
+
+        header("Location: index.php?route=organisasi");
+        exit;
+
+
+
+    case 'verifikasi-request':
+        include 'controllers/verifikasiRequestController.php';
+        break;
+
+    case 'organisasi':
+        include 'controllers/organisasiAnggotaController.php';
+        break;
+
+    case 'permintaan':
+        include 'controllers/PermintaanController.php';
         break;
 }

@@ -1,27 +1,12 @@
-<?php
-session_start();
-include '../includes/database.php';
+<?php include __DIR__ . '/../layout/header.php'; ?>
+<?php include __DIR__ . '/../layout/navbar.php'; ?>
+<?php include __DIR__ . '/../layout/sidebar.php'; ?>
 
-$title = 'Orgenius - Anggota';
-
-$namaUser = $_SESSION['user']['nama'];
-$idUser = $_SESSION['user']['id'];
-
-// untuk ambil data tugas berdasarkan idUser dari database
-$query = "SELECT * FROM tugas WHERE idUser = '$idUser' ORDER BY deadline ASC";
-$result = mysqli_query($conn, $query);
-
-?>
-<?php include '../layout/header.php';?>
-<?php include '../layout/navbar.php';?>
-<?php include '../layout/sidebar.php';?>
-<!-- Konten Utama -->
-<main class="flex-1 p-6 ml-64">
+<main class="flex-1 p-6 ml-64 pt-16">
   <div class="flex justify-between items-center mb-6">
     <h2 class="text-2xl font-bold">Dashboard Anggota</h2>
   </div>
 
-  <!-- Daftar Tugas -->
   <div class="bg-white p-6 rounded-lg shadow">
     <h3 class="text-lg font-semibold mb-4">Daftar Tugas</h3>
     <div class="overflow-x-auto">
@@ -36,27 +21,30 @@ $result = mysqli_query($conn, $query);
           </tr>
         </thead>
         <tbody>
-          <?php
-          $no = 1;
-          while ($data = mysqli_fetch_assoc($result)) {
-            ?>
-            <tr class="border-t hover:bg-gray-50">
-              <td class="p-2"><?= $no++; ?></td>
-              <td class="p-2 font-semibold"><?= htmlspecialchars($data['judul']); ?></td>
-              <td class="p-2"><?= date('d-m-Y', strtotime($data['deadline'])); ?></td>
-              <td class="p-2 text-<?= $data['status'] === 'Selesai' ? 'green' : 'red'; ?>-600">
-                <?= ucfirst($data['status']); ?>
-              </td>
-              <td class="p-2 text-center">
-                <a href="#" class="text-blue-600 hover:underline">Detail</a>
-              </td>
+          <?php if ($tugasList && $tugasList->num_rows > 0): ?>
+            <?php $no = 1;
+            foreach ($tugasList as $data): ?>
+              <tr class="border-t hover:bg-gray-50">
+                <td class="p-2"><?= $no++ ?></td>
+                <td class="p-2 font-semibold"><?= htmlspecialchars($data['judul']) ?></td>
+                <td class="p-2"><?= date('d-m-Y', strtotime($data['deadline'])) ?></td>
+                <td class="p-2 text-<?= $data['status'] === 'Selesai' ? 'green' : 'red' ?>-600">
+                  <?= ucfirst($data['status']) ?>
+                </td>
+                <td class="p-2 text-center">
+                  <a href="#" class="text-blue-600 hover:underline">Detail</a>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          <?php else: ?>
+            <tr>
+              <td colspan="5" class="text-center text-gray-500 p-4">Belum ada tugas</td>
             </tr>
-            <?php
-          }
-          ?>
+          <?php endif; ?>
         </tbody>
       </table>
     </div>
   </div>
 </main>
 
+<?php include __DIR__ . '/../layout/footer.php'; ?>

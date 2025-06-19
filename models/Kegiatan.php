@@ -1,19 +1,24 @@
 <?php
 class Kegiatan {
   public static function tambah($conn, $data, $idUser) {
-    $nama = mysqli_real_escape_string($conn, $data['namaKegiatan']);
-    $deskripsi = mysqli_real_escape_string($conn, $data['deskripsi']);
-    $tanggal = mysqli_real_escape_string($conn, $data['tanggal']);
-    $lokasi = mysqli_real_escape_string($conn, $data['lokasi']);
+    $nama = $data['namaKegiatan'] ?? '';
+    $deskripsi = $data['deskripsi'] ?? '';
+    $tanggal = $data['tanggal'] ?? '';
+    $lokasi = $data['lokasi'] ?? '';
+    $idOrganisasi = $data['idOrganisasi'] ?? null;
 
-    $query = "INSERT INTO kegiatan (namaKegiatan, deskripsi, tanggal, lokasi, idPembuat) 
-                  VALUES ('$nama', '$deskripsi', '$tanggal', '$lokasi', '$idUser')";
+    $query = "INSERT INTO kegiatan (namaKegiatan, deskripsi, tanggal, lokasi, idPembuat, idOrganisasi)
+            VALUES (?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("ssssii", $nama, $deskripsi, $tanggal, $lokasi, $idUser, $idOrganisasi);
 
-    if (mysqli_query($conn, $query)) {
-      return ['status' => 'success', 'message' => 'Kegiatan berhasil ditambahkan!'];
+    if ($stmt->execute()) {
+      return ['status' => 'success', 'message' => 'Kegiatan berhasil ditambahkan.'];
+    } else {
+      return ['status' => 'error', 'message' => 'Gagal menambahkan kegiatan.'];
     }
-    return ['status' => 'error', 'message' => mysqli_error($conn)];
   }
+
 
   public static function countByUser($conn, $idUser) {
     $query = "SELECT COUNT(*) as total FROM kegiatan WHERE idPembuat = ?";

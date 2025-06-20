@@ -1,11 +1,12 @@
 
 <?php
-$Edit = (int) $_GET['edit'];
+$idEdit = (int) $_GET['edit'];
 $stmtEdit = $conn->prepare("SELECT * FROM kegiatan WHERE idKegiatan = ? AND idPembuat = ?");
 $stmtEdit->bind_param("ii", $idEdit, $_SESSION['user']['id']);
 $stmtEdit->execute();
 $editData = $stmtEdit->get_result()->fetch_assoc();
 ?>
+
 <div id="modalEdit" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
   <div class="bg-white rounded-lg shadow-md w-full max-w-lg p-6">
     <div class="flex justify-between items-center mb-4">

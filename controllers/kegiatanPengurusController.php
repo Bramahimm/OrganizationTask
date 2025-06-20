@@ -8,30 +8,55 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'pengurus') {
 }
 
 $idUser = $_SESSION['user']['id'];
+$message = '';
+$messageType = '';
+$editData = null;
 
-// Ambil semua idOrganisasi yang dikelola oleh user
+if (isset($_POST['edit_kegiatan'])) {
+  $result = Kegiatan::edit($conn, $_POST, $idUser);
+  $message = $result['message'];
+  $messageType = $result['status'];
+}
+
+if (isset($_POST['tambah_kegiatan'])) {
+  $result = Kegiatan::tambah($conn, $_POST, $idUser);
+  $message = $result['message'];
+  $messageType = $result['status'];
+}
+
+if (isset($_GET['hapus'])) {
+  $result = Kegiatan::hapus($conn, $_GET['hapus'], $idUser);
+  $message = $result['message'];
+  $messageType = $result['status'];
+}
+
 $orgQuery = $conn->prepare("SELECT idOrganisasi FROM user_organisasi WHERE idUser = ? AND role = 'pengurus'");
 $orgQuery->bind_param("i", $idUser);
 $orgQuery->execute();
 $orgResult = $orgQuery->get_result();
 
-$organisasiIds = array();
+$organisasiIds = [];
 while ($row = $orgResult->fetch_assoc()) {
   $organisasiIds[] = $row['idOrganisasi'];
 }
 
-// Jika tidak mengelola organisasi apa pun
 if (empty($organisasiIds)) {
   $kegiatanList = [];
 } else {
-  $inQuery = implode(',', array_fill(0, count($organisasiIds), '?'));
-  $stmt = $conn->prepare("SELECT * FROM kegiatan WHERE idOrganisasi IN ($inQuery) ORDER BY tanggal ASC");
+  $placeholders = implode(',', array_fill(0, count($organisasiIds), '?'));
+  $stmt = $conn->prepare("SELECT * FROM kegiatan WHERE idOrganisasi IN ($placeholders) ORDER BY tanggal ASC");
   $stmt->bind_param(str_repeat('i', count($organisasiIds)), ...$organisasiIds);
   $stmt->execute();
   $kegiatanList = $stmt->get_result();
 }
 
-$message = '';
-$messageType = '';
+if (isset($_GET['edit'])) {
+  $idEdit = (int) $_GET['edit'];
+  $stmtEdit = $conn->prepare("SELECT * FROM kegiatan WHERE idKegiatan = ? AND idPembuat = ?");
+  $stmtEdit->bind_param("ii", $idEdit, $idUser);
+  $stmtEdit->execute();
+  $editData = $stmtEdit->get_result()->fetch_assoc();
+}
+
 $title = 'Jadwal Kegiatan Pengurus';
 include __DIR__ . '/../views/jadwalKegiatanPengurus.php';

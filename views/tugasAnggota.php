@@ -379,8 +379,7 @@ if (isset($_GET['edit'])) {
                 if (event.target === modals[i]) {
                     modals[i].classList.remove('active');
                 }
-            }
-        }
+            }        }
 
         // Auto hide success message after 5 seconds
         <?php if ($message && $messageType === 'success'): ?>

@@ -69,7 +69,8 @@ include __DIR__ . '/../layout/header.php'; // pastikan file ini hanya memuat <he
             </form>
 
             <p class="text-sm text-right mt-2">
-                <a href="#" class="text-blue-600 hover:underline">Belum Punya Akun?</a>
+                <a href="index.php?route=register" class="text-blue-600 hover:underline">Belum Punya Akun?</a>
+
             </p>
         </div>
     </div>

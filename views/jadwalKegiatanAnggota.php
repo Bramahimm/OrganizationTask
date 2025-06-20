@@ -90,5 +90,4 @@ include __DIR__ . '/../layout/sidebar.php';
         </div>
     <?php endif; ?>
 </main>
-
 <?php include __DIR__ . '/../layout/footer.php'; ?>

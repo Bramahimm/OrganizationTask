@@ -1,4 +1,3 @@
-
 <?php
 class Tugas {
   public static function getAllByUser($conn, $idUser) {

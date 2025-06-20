@@ -1,62 +1,52 @@
 <?php
-function checkUsersAccess() {
-    $role = $_SESSION['user']['role'];
-    if ($role === 'pengurus') {
-        header("Location: ../views/dashboardPengurus.php");
-        exit();
-    } elseif ($role === 'anggota') {
-        header("Location: ../views/dashboardAnggota.php");
-        exit();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+function requireRole($role) {
+    if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== $role) {
+        header("Location: ../index.php");
+        exit;
     }
-
-    header("Location: ../index.php");
-    exit();
 }
 
-function tambahTugas($conn, $data, $idUser) {
-    $judul = mysqli_real_escape_string($conn, $data['judul']);
-    $deskripsi = mysqli_real_escape_string($conn, $data['deskripsi']);
-    $deadline = mysqli_real_escape_string($conn, $data['deadline']);
-    $status = mysqli_real_escape_string($conn, $data['status']);
-
-    $query = "INSERT INTO tugas (judul, deskripsi, deadline, status, idUser) 
-            VALUES ('$judul', '$deskripsi', '$deadline', '$status', '$idUser')";
-    return mysqli_query($conn, $query);
+function activeClass($file) {
+    $current = basename($_SERVER['PHP_SELF']);
+    return $current === $file ? 'bg-blue-600 text-white' : 'hover:bg-gray-100 text-black';
 }
 
-function updateTugas($conn, $data) {
-    $idTugas = mysqli_real_escape_string($conn, $data['idTugas']);
-    $judul = mysqli_real_escape_string($conn, $data['judul']);
-    $deskripsi = mysqli_real_escape_string($conn, $data['deskripsi']);
-    $deadline = mysqli_real_escape_string($conn, $data['deadline']);
-    $status = mysqli_real_escape_string($conn, $data['status']);
-
-    $query = "UPDATE tugas 
-            SET judul='$judul', deskripsi='$deskripsi', deadline='$deadline', status='$status' 
-            WHERE idTugas='$idTugas'";
-    return mysqli_query($conn, $query);
+function getUserId() {
+    return $_SESSION['user']['id'] ?? null;
 }
 
-function getTugasByUserId($conn, $idUser) {
-    $query = "SELECT * FROM tugas WHERE idUser = '$idUser' ORDER BY deadline ASC";
-    return mysqli_query($conn, $query);
+function getUserName() {
+    return $_SESSION['user']['nama'] ?? 'Pengguna';
 }
 
+
+function isPengurus() {
+    return isset($_SESSION['user']) && $_SESSION['user']['role'] === 'pengurus';
+}
+
+function isAnggota() {
+    return isset($_SESSION['user']) && $_SESSION['user']['role'] === 'anggota';
+}
 function redirectWithError($type) {
     header("Location: index.php?route=login&error=$type");
     exit;
 }
 
 function redirectToDashboard($role) {
-    switch ($role) {
-        case 'pengurus':
-            header("Location: views/dashboardPengurus.php");
-            break;
-        case 'anggota':
-            header("Location: views/dashboardAnggota.php");
-            break;
-        default:
-            redirectWithError('unknown_role');
-    }
+    $target = $role === 'pengurus' ? 'dashboard' : 'dashboard';
+    header("Location: index.php?route=$target");
     exit;
+}
+function getPendingRequestCount($conn, $idUser) {
+    $stmt = $conn->prepare("SELECT COUNT(*) as total FROM request_organisasi r
+    JOIN user_organisasi uo ON r.idOrganisasi = uo.idOrganisasi
+    WHERE uo.idUser = ? AND uo.role = 'pengurus' AND r.status = 'pending'");
+    $stmt->bind_param("i", $idUser);
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_assoc();
+    return $result['total'] ?? 0;
 }

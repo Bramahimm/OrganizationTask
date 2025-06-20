@@ -1,33 +1,33 @@
 <?php
-require_once __DIR__ . '/helpers.php';  
+require_once __DIR__ . '/helpers.php';
 require_once __DIR__ . '/database.php';
 require_once __DIR__ . '/User.php';
+
 session_start();
 
-// ini untuk ngammbil input
-$email = mysqli_real_escape_string($conn, $_POST['email'] ?? '');
+// ngambil input login
+$email = trim($_POST['email'] ?? '');
 $password = $_POST['password'] ?? '';
 
-// ini untuk validasi input
+// ngevalidasi input
 if (!$email || !$password) {
     redirectWithError('empty');
 }
 
-// ini untuk ngambil user dari database
+// buat ngambil user dari database
 $user = getUserByEmail($conn, $email);
 
-// ngevalidasi email ama password
+// buat ngecek kecocokan password
 if (!$user || !password_verify($password, $user['password'])) {
     redirectWithError('invalid');
 }
 
-// buat nyimpen sesi
+// ini untuk nyimpan session
 $_SESSION['user'] = [
     'id'    => $user['idUser'],
     'nama'  => $user['nama'],
-    'role'  => $user['role']
+    'role'  => $user['role'],
 ];
 
-// ini buat ngedirect sesuai ama role
+// Redirect ke dashboard sesuai role
 redirectToDashboard($user['role']);
-

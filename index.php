@@ -3,6 +3,20 @@ session_start();
 
 $route = $_GET['route'] ?? 'login';
 
+// Tangani detail tugas anggota (modal)
+if ($route === 'dashboard' && isset($_GET['detail'])) {
+    require_once 'includes/init.php';
+    $idTugas = (int) $_GET['detail'];
+    $stmt = $conn->prepare("SELECT * FROM tugas WHERE idTugas = ?");
+    $stmt->bind_param("i", $idTugas);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $editData = $result->fetch_assoc();
+
+    include 'controllers/dashboardAnggotaController.php';
+    exit;
+}
+
 switch ($route) {
     case 'login':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -20,9 +34,6 @@ switch ($route) {
         }
         break;
 
-
-
-
     case 'dashboard':
         if (!isset($_SESSION['user'])) {
             header("Location: index.php?route=login");
@@ -34,29 +45,7 @@ switch ($route) {
         if ($role === 'pengurus') {
             include 'controllers/dashboardPengurusController.php';
         } elseif ($role === 'anggota') {
-            include 'controllers/DashboardAnggotaController.php';
-        }
-        break;
-
-
-    case 'jadwal-kegiatan-pengurus':
-        include 'controllers/kegiatanController.php';
-        break;
-
-    default:
-        http_response_code(404);
-        echo "<h1>404 - Halaman tidak ditemukan</h1>";
-        break;
-    case 'dashboard':
-        if (!isset($_SESSION['user'])) {
-            header("Location: index.php?route=login");
-            exit;
-        }
-
-        if ($_SESSION['user']['role'] === 'pengurus') {
-            include 'controllers/DashboardPengurusController.php';
-        } elseif ($_SESSION['user']['role'] === 'anggota') {
-            include 'controllers/DashboardAnggotaController.php';
+            include 'controllers/dashboardAnggotaController.php';
         }
         break;
 
@@ -72,7 +61,6 @@ switch ($route) {
         include 'controllers/jadwalKegiatanAnggotaController.php';
         break;
 
-
     case 'request-organisasi':
         require_once 'includes/init.php';
         $idUser = $_SESSION['user']['id'];
@@ -87,8 +75,6 @@ switch ($route) {
         header("Location: index.php?route=organisasi");
         exit;
 
-
-
     case 'verifikasi-request':
         include 'controllers/verifikasiRequestController.php';
         break;
@@ -99,5 +85,10 @@ switch ($route) {
 
     case 'permintaan':
         include 'controllers/PermintaanController.php';
+        break;
+
+    default:
+        http_response_code(404);
+        echo "<h1>404 - Halaman tidak ditemukan</h1>";
         break;
 }

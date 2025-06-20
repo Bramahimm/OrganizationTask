@@ -1,5 +1,6 @@
-<?
-$idEdit = (int) $_GET['edit'];
+
+<?php
+Edit = (int) $_GET['edit'];
 $stmtEdit = $conn->prepare("SELECT * FROM kegiatan WHERE idKegiatan = ? AND idPembuat = ?");
 $stmtEdit->bind_param("ii", $idEdit, $_SESSION['user']['id']);
 $stmtEdit->execute();

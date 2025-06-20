@@ -1,7 +1,7 @@
 <?php
 $host = 'localhost';        
-$user = 'bramahimm';             
-$pass = 'bramlafayet123';              
+$user = 'root';             
+$pass = '';              
 $db = 'orgenius2';      
 $conn = mysqli_connect($host, $user, $pass, $db);
 // Cek koneksi

@@ -22,17 +22,16 @@
         </thead>
         <tbody>
           <?php if ($tugasList && $tugasList->num_rows > 0): ?>
-            <?php $no = 1;
-            foreach ($tugasList as $data): ?>
+            <?php $no = 1; foreach ($tugasList as $data): ?>
               <tr class="border-t hover:bg-gray-50">
                 <td class="p-2"><?= $no++ ?></td>
                 <td class="p-2 font-semibold"><?= htmlspecialchars($data['judul']) ?></td>
                 <td class="p-2"><?= date('d-m-Y', strtotime($data['deadline'])) ?></td>
-                <td class="p-2 text-<?= $data['status'] === 'Selesai' ? 'green' : 'red' ?>-600">
+                <td class="p-2 text-<?= $data['status'] === 'selesai' ? 'green' : 'red' ?>-600">
                   <?= ucfirst($data['status']) ?>
                 </td>
                 <td class="p-2 text-center">
-                  <a href="#" class="text-blue-600 hover:underline">Detail</a>
+                  <a href="index.php?route=dashboard&detail=<?= $data['idTugas'] ?>" class="text-blue-600 hover:text-blue-800 px-2 py-1 hover:bg-blue-100 rounded-md">Detail</a>
                 </td>
               </tr>
             <?php endforeach; ?>
@@ -47,4 +46,15 @@
   </div>
 </main>
 
+<?php if (isset($editData) && $editData): ?>
+  <?php include __DIR__ . '/../partials/modal-detail-tugas.php'; ?>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const modal = document.getElementById('modalDetail');
+      if (modal) modal.style.display = 'flex';
+    });
+  </script>
+<?php endif; ?>
+
 <?php include __DIR__ . '/../layout/footer.php'; ?>
+<script src="../assets/js/modal.js"></script>

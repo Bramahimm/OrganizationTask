@@ -97,8 +97,17 @@ include __DIR__ . '/../layout/sidebar.php';
             modal.classList.add('hidden');
         }
     }
+
+    function confirmHapus(id) {
+        const modal = document.getElementById('modalHapus');
+        const link = document.getElementById('btnHapusLink');
+        if (modal && link) {
+            link.href = `index.php?route=tugas&hapus=${id}`;
+            modal.classList.remove('hidden');
+        }
+    }
 </script>
 <?php include __DIR__ . '/../partials/modal-tambah-tugas.php'; ?>
 <?php include __DIR__ . '/../partials/modal-hapus-tugas.php'; ?>
 <?php if ($editData) include __DIR__ . '/../partials/modal-edit-tugas.php'; ?>
-<?php include __DIR__ . '/../layout/footer.php'; ?> 
+<?php include __DIR__ . '/../layout/footer.php'; ?>

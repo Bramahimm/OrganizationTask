@@ -1,8 +1,8 @@
 <?php
 $host = 'localhost';        
-$user = 'root';             
-$pass = '';              
-$db = 'orgenius';      
+$user = 'bramahimm';             
+$pass = 'bramlafayet123';              
+$db = 'orgenius2';      
 $conn = mysqli_connect($host, $user, $pass, $db);
 // Cek koneksi
 if (!$conn) {
